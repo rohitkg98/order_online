@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<form>
+    <h1>Enter your details to register </h1> 
+    {{ user_form.as_p }}
+    {{ client_form.as_p }}
+    <input type = 'submit' value = 'Register'/>
+</form>
+{% endblock %}

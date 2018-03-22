@@ -1,0 +1,11 @@
+{% extends base.html %}
+{% block content %}
+<form>
+    {% for item in items %}
+        {{ item.item_name }}<br>
+        {{ item.price}}
+        <input type = 'checkbox' name='selected_items' value = '{{ item.ITEMID }}'>
+    {% endfor %}
+    <input type='submit' value='Order these Items'>
+</form>
+{% endblock %}
