@@ -1,5 +1,5 @@
 from django.urls import path
-from login.views import login, auth_view, logout, loggedin, invalidlogin, register, registered
+from login.views import login, auth_view, logout, loggedin, invalidlogin, register, res_register
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url
 
@@ -10,5 +10,5 @@ urlpatterns = [
         url(r'^loggedin/$', loggedin),
         url(r'^invalidlogin/$', invalidlogin),
         url(r'^register/$',register),
-        url(r'^registered/$',registered)
+        url(r'^res_register/$',res_register)
         ]

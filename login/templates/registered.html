@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1> The user with name {{client.name}} has been registered</h1>
+<h1> The user with name {{client_instance.name}} has been registered</h1>
 Follwing are their details:-
-Name:-{{client.name}}<br>
-Phone Number:- {{client.phone_number}}<br>
-State:- {{client.state}}<br>
-City:- {{client.city}}<br>
-Address:- {{client.address}}<br>
-Click<a href='login.html'>here</a> to go back to log in
+Name:-{{client_instance.name}}<br>
+Phone Number:- {{client_instance.phone_number}}<br>
+State:- {{client_instance.state}}<br>
+City:- {{client_instance.city}}<br>
+Address:- {{client_instance.address}}<br>
+Click<a href='/login/login/'>here</a> to go back to log in
 {% endblock %}

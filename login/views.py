@@ -5,6 +5,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from login.forms import *
+from django.contrib.auth.models import Group
 # Create your views here.
 
 def login(request):
@@ -25,7 +26,11 @@ def auth_view(request):
 
 @login_required(redirect_field_name = '/login/login')
 def loggedin(request):
-    return render(request,'loggedin.html')
+    user = request.user
+    if user.groups.get(name='Client') is None:
+        return HttpResponseRedirect('/restaurant/add_item')
+    else:
+        return HttpResponseRedirect("/order/select_res")
 
 def invalidlogin(request):
     return render(request,'invalidlogin.html')
@@ -36,19 +41,34 @@ def logout(request):
 
 def register(request):
     #if request.method == 'POST':
+    client_group - Group.objects.get(name = 'Client')
     user_form = UserForm(request.POST)
     client_form = ClientForm(request.POST)
-    if user_form.is_valid():
-        return HttpReponseRedirect('/login/registered')
+    if user_form.is_valid() and client_form.is_valid():
+        user_instance = user_form.save(commit =False)
+        user_instance.set_password(user_form.password)
+        user_instance.is_staff = True
+        user_isntance.groups.add(client_group)
+        user_instance.save()
+        client_instance = client_form.save(commit = False)
+        client_instance.User = user_instance
+        client_instance.save()
+        return render(request , 'registered.html',{'client_instance' : client_instance })
     else:
         return render(request,'register.html', {'user_form' : user_form , 'client_form':client_form})
 
-def registered(request):
-    user = User.objects.create_user(username = request.POST.get('username','') , password = request.POST.get('password','') , email = request.POST.get('email',''))
-    user.is_staff = True
-    user.first_name = request.POST.get('fname','')
-    user.last_name = request.POST.get('lname' ,'')
-    user.save()
-    client = Client(User = user , phone_number = request.POST.get('phone_number','') , state = request.POST.get('state',''), name = user.first_name+' '+user.last_name , city = request.POST.get('city','') , address = request.POST.get('address',''))
-    client.save()
-    return render(request , 'registered.html')
+def res_register(request):
+    res_group = Group.objects.get(name = 'Restaurant')
+    user_form = UserForm(request.POST)
+    res_form = RestaurantForm(request.POST)
+    if user_form.is_valid() and res_form.is_valid():
+        user_instance = user_form.save(commit = False)
+        user_instance.is_staff = True
+        user_instance.groups.add(res_group)
+        user_instance.save()
+        res_instance = res_form.save(commit =False)
+        res_instance.User = user_instance
+        res_instance.save()
+        return render(request , 'res_registered.html')
+    else:
+        return render(request , 'res_register.html' , {'user_form' : user_form , 'res_form' : res_form})

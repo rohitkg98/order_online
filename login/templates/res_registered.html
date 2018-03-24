@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+{% csrf_token %}
+<h2> A retaurant with the following details has been registered</h2><br>
+RID:-{{ res_instance.RID }}
+Name:- {{ res_instance.name }}
+Address:- {{ res_instance.address }}
+State:- {{ res_instance.state }}
+city:- {{ res_instance.city }}
+<a href='/login/login/'>Click here</a> to login
+{% endblock %}
