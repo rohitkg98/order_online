@@ -1,9 +1,21 @@
 +App flow:-
+
+
 1.LoginApp:
+
+
     1.SignUp:
+    
+    
         * Restaurant
+        
+        
         * Client
+        
+        
     2.Login:
+    
+    
         * Redirect to Order Portal if Client
         * Redirect to Restaurant Portal if Restaurant
     3.InvalidLogin:
