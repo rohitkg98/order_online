@@ -22,4 +22,4 @@ class Restaurant(models.Model):
     state = models.CharField(max_length = 20)
     ITEMID = models.ManyToManyField(Items )
     city = models.CharField( max_length = 20)
-    ratings = models.IntegerField()
+    ratings = models.IntegerField(default = 0 )

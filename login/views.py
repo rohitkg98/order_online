@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from login.forms import *
 from django.contrib.auth.models import Group
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 def login(request):
@@ -27,7 +28,7 @@ def auth_view(request):
 @login_required(redirect_field_name = '/login/login')
 def loggedin(request):
     user = request.user
-    if user.groups.get(name='Client') is None:
+    if user.groups.filter(name='Restaurant'):
         return HttpResponseRedirect('/restaurant/add_item')
     else:
         return HttpResponseRedirect("/order/select_res")
@@ -42,11 +43,11 @@ def logout(request):
 def register(request):
     #if request.method == 'POST':
     client_group - Group.objects.get(name = 'Client')
-    user_form = UserForm(request.POST)
+    user_form = UserCreationForm(request.POST)
     client_form = ClientForm(request.POST)
     if user_form.is_valid() and client_form.is_valid():
         user_instance = user_form.save(commit =False)
-        user_instance.set_password(user_form.password)
+        #user_instance.set_password(user_form.cleaned_data.get('password1'))
         user_instance.is_staff = True
         user_isntance.groups.add(client_group)
         user_instance.save()
@@ -59,16 +60,18 @@ def register(request):
 
 def res_register(request):
     res_group = Group.objects.get(name = 'Restaurant')
-    user_form = UserForm(request.POST)
+    user_form = UserCreationForm(request.POST)
     res_form = RestaurantForm(request.POST)
     if user_form.is_valid() and res_form.is_valid():
         user_instance = user_form.save(commit = False)
         user_instance.is_staff = True
+        #user_instance.set_password(user_form.cleaned_data.get('password1'))
+        user_instance.save()
         user_instance.groups.add(res_group)
         user_instance.save()
         res_instance = res_form.save(commit =False)
         res_instance.User = user_instance
         res_instance.save()
-        return render(request , 'res_registered.html')
+        return render(request , 'res_registered.html' , { 'res_instance' : res_instance})
     else:
-        return render(request , 'res_register.html' , {'user_form' : user_form , 'res_form' : res_form})
+        return render(request , 'res_register.html' , {'user_form' : user_form , 'res_form' : res_form} )

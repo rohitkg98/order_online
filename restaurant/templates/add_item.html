@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form>
+<form method='POST'>
     {{ item_form.as_p }}{% csrf_token %}
     <input type="submit" value"'Add Item">
 </form>

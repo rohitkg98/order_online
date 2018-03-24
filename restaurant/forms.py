@@ -4,4 +4,4 @@ from restaurant.models import Items
 class ItemsForm(forms.ModelForm):
     class Meta:
         model = Items
-        exclude = ('ITEMID','review',)
+        fields = [ 'item_name' ,'image' , 'item_price' ] 
