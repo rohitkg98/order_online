@@ -1,0 +1,7 @@
+{% extends base.html %}
+    <h2> you order has been placed and these are the details </h2>
+    {% for item in order.items %}
+        {{ item.name }}  :  {{ item.price }}
+    {% endfor %}
+    Total cost of ordering is INR {{ order.price }}
+{% endblock %}

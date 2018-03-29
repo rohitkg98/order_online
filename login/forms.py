@@ -16,3 +16,4 @@ class RestaurantForm(forms.ModelForm):
     class Meta:
         model = Restaurant
         fields = ('name','address','state','city', )
+

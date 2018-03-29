@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def select_restaurant(request):
     restaurants = Restaurant.objects.all()
-    return render(request , 'list_restaurants.html') #checkbox for selecting list
+    return render(request , 'list_restaurants.html', {'restaurants' : restaurants} ) #checkbox for selecting list
 
 @login_required
 def show_items(request):
@@ -16,23 +16,26 @@ def show_items(request):
     items =[]
     restaurant = Restaurant.objects.filter(RID=res_id)
     for ID in restaurant.ITEMID:
-        items.append(Items.objects.get(ITEMID=ID))
-    return render(request , 'select_items.html')
+        items.append((Items.objects.filter(ITEMID=ID))[0])
+    return render(request , 'select_items.html', {'items':items} )
 
 @login_required
 def finalize_order(request):
     total_cost = 0
-    selected_items = request.POST.get('selected_items','')
+    selected_item_ids = request.POST.get('selected_item_ids','')
     user = request.user
-    for item in selected_items:
+    selected_items=[]
+    for id in selected_item_ids:
+        item = (Items.objects.filter(ITEMID=selected_item_ids))[0]
+        selected_items.append(item)
         total_cost += item.price
-    order = Order(items= selected_items , user = user, payment_status ='initiated', timeplaced = timezone.now , quantity = len(selected_items) , oorder_status ='placed' , discount=0 , price = total_cost)
+    order = Order(items= selected_items , user = user, payment_status ='initiated', timeplaced = timezone.now , quantity = len(selected_items) , order_status ='placed' , discount=0 , price = total_cost)
     request.session['order']=order.save()
-    return render(request , 'finalize_order.html')
+    return render(request , 'finalize_order.html', {'item':item })
 
 @login_required
 def ordered(request):
     order = request.session['order']
     order.payment_status = 'done'
-    order.save()
-    return render(request , 'ordered.html')
+    order = order.save()
+    return render(request , 'ordered.html', { 'order' : order })

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 def add_item(request):
     restaurant = (Restaurant.objects.filter(User = request.user))[0]
     item_form = ItemsForm(request.POST , request.FILES)
-    if item_form.is_valid(): 
+    if item_form.is_valid():
         new_item = item_form.save(commit = False)
         new_item.image = request.FILES['image']
         item = new_item.save()
@@ -17,9 +17,9 @@ def add_item(request):
         return render(request , 'item_added.html', {'new_item' : item , 'restaurant' : restaurant})
     print(item_form.errors)
     return render(request , 'add_item.html', {'item_form' : item_form})
-
+@login_required
 def view_items(request):
-    restaurant = (Restaurant.objects.filter(User = request.user))[0]
+    restaurant = Restaurant.objects.get(User = request.user)
     items = []
     for id in restaurant.ITEMID:
         items.append((Items.objects.filter(ITEMID=id))[0])

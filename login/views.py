@@ -7,13 +7,14 @@ from django.template.context_processors import csrf
 from login.forms import *
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import login,logout
 # Create your views here.
-
+'''
 def login(request):
    # c = {}
    # c.update(csrf(request))
     return render(request,'login.html')
-
+'''
 def auth_view(request):
     uname = request.POST.get('username','')
     pword = request.POST.get('password','')
@@ -34,12 +35,12 @@ def loggedin(request):
         return HttpResponseRedirect("/order/select_res")
 
 def invalidlogin(request):
-    return render(request,'invalidlogin.html')
-
+    return render(request,'login/invalidlogin.html')
+'''
 def logout(request):
     auth.logout(request)
     return render(request,'logout.html')
-
+'''
 def register(request):
     #if request.method == 'POST':
     client_group - Group.objects.get(name = 'Client')
@@ -54,9 +55,9 @@ def register(request):
         client_instance = client_form.save(commit = False)
         client_instance.User = user_instance
         client_instance.save()
-        return render(request , 'registered.html',{'client_instance' : client_instance })
+        return render(request , 'login/registered.html',{'client_instance' : client_instance })
     else:
-        return render(request,'register.html', {'user_form' : user_form , 'client_form':client_form})
+        return render(request,'login/register.html', {'user_form' : user_form , 'client_form':client_form})
 
 def res_register(request):
     res_group = Group.objects.get(name = 'Restaurant')
@@ -72,6 +73,6 @@ def res_register(request):
         res_instance = res_form.save(commit =False)
         res_instance.User = user_instance
         res_instance.save()
-        return render(request , 'res_registered.html' , { 'res_instance' : res_instance})
+        return render(request , 'login/res_registered.html' , { 'res_instance' : res_instance})
     else:
-        return render(request , 'res_register.html' , {'user_form' : user_form , 'res_form' : res_form} )
+        return render(request , 'login/res_register.html' , {'user_form' : user_form , 'res_form' : res_form} )

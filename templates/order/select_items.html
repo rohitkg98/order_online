@@ -4,7 +4,7 @@
     {% for item in items %}
         {{ item.item_name }}<br>
         {{ item.price}}
-        <input type = 'checkbox' name='selected_items' value = '{{ item.ITEMID }}'>
+        <input type = 'checkbox' name='selected_item_ids' value = '{{ item.ITEMID }}'>
     {% endfor %}
     <input type='submit' value='Order these Items'>
 </form>

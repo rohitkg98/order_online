@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from order_online import settings
+from login.views import login
 
 urlpatterns = [
+    path('',login),
     path('admin/', admin.site.urls),
     path('login/', include('login.urls')),
     path('order/', include('order.urls')),

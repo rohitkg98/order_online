@@ -1,0 +1,9 @@
+{% extends 'login/base.html' %}
+
+{% block content %}
+        <form action="/login/auth/" method = "POST" class = "form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" value="Log In">Log In
+        </form>
+        <a href='/login/register'>Click to Register</a>
+{% endblock %}
