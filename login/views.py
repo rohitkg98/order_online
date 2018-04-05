@@ -50,8 +50,8 @@ def register(request):
         user_instance = user_form.save(commit =False)
         #user_instance.set_password(user_form.cleaned_data.get('password1'))
         user_instance.is_staff = True
-        user_isntance.groups.add(client_group)
-        user_instance.save()
+        user = user_instance.save()
+        user_instance.groups.add(client_group)
         client_instance = client_form.save(commit = False)
         client_instance.User = user_instance
         client_instance.save()

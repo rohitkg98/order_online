@@ -6,7 +6,7 @@ import uuid
 # Create your models here.
 class Order(models.Model):
     ORDERID = models.UUIDField( primary_key=True , default = uuid.uuid4)
-    items = models.ManyToManyField(Items , null = True)   #Foreign key to Items
+    Items = models.ManyToManyField(Items , null = True)   #Foreign key to Items
     user = models.ForeignKey(Client , on_delete = models.SET_NULL , null = True)  #Foreign key to Client
     payment_status = models.BooleanField(default = False)
     time_placed = models.DateTimeField( default = timezone.now)

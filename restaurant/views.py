@@ -14,7 +14,7 @@ def add_item(request):
         #new_item.image = request.FILES['image']
         #item = new_item.save()
         restaurant = Restaurant.objects.filter(User = request.user)[0]
-        restaurant.ITEMID.add(new_item.ITEMID)
+        restaurant.Items.add(new_item)
         restaurant = restaurant.save()
         return render(request , 'restaurant/item_added.html', {'new_item' : new_item , 'restaurant' : restaurant})
     print(item_form.errors)

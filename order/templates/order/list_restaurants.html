@@ -1,9 +1,8 @@
 {% extends 'order/base.html' %}
 {% block content %}
-<form>
+<form action='/order/show_items/'>
     {% for restaurant in restaurants %}
-        <h2>{{ restaurant.name }}</h2><br>
-        <input type = 'radiobutton' name='restaurant' value='{{ restaurant.RID}}'/> <br>
+        <input type = 'radio' name='restaurant' value='{{ restaurant.RID}}'> {{ restaurant.name }}<br>
     {% endfor %}
     <input type= 'submit' value = 'Show Items for this'>
 </form>
