@@ -1,9 +1,9 @@
 {% extends 'order/base.html' %}
 {% block content %}
-<form action='/order/show_items/'>
+<form method="POST" action='/order/show_items/'>{% csrf_token %}
     {% for restaurant in restaurants %}
-        <input type = 'radio' name='restaurant' value='{{ restaurant.RID}}'> {{ restaurant.name }}<br>
+        <input class="w3-radio" type = 'radio' name='res_id' value='{{ restaurant.RID}}'> {{ restaurant.name }}<br>
     {% endfor %}
-    <input type= 'submit' value = 'Show Items for this'>
+    <input class="w3-btn w3-green" type= 'submit' value = 'Show Items for this'>
 </form>
 {% endblock %}

@@ -1,6 +1,7 @@
-{% extends base.html %}
+{% extends 'order/base.html' %}
 {% block content %}
-<form>
+<form method="POST" action="/order/finalize/">
+    {% csrf_token %}
     {% for item in items %}
         {{ item.item_name }}<br>
         {{ item.price}}

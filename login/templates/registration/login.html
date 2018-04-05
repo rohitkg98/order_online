@@ -1,9 +1,13 @@
 {% extends 'login/base.html' %}
 
 {% block content %}
+<div class='w3-container w3-middle w3-green'> 
+    <div class="w3-input w3-text-black">
         <form action="/login/auth/" method = "POST" class = "form">{% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" value="Log In">Log In</button>
+            <button class="w3-btn w3-light-blue w3-hover-blue" type="submit" value="Log In">Log In</button>
         </form>
         <a href='/login/register'>Click to Register</a>
+    </div>
+</div>
 {% endblock %}
