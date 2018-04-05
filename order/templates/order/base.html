@@ -1,0 +1,18 @@
+{% load static %}
+<html>
+    <head>
+        <title>Order Now</title>
+        <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+    </head>
+    <body>
+        <div class="w3-container w3-blue">
+            <h2>Place your Order Now!</h2>
+        </div>
+        {% block content %}
+        {% endblock %}
+        <div class="w3-container w3-blue">
+            <h6>Software Project by CE-100,101,102.</h6>
+            <p><a href="/login/logout/">Logout</a></p>
+        </div>
+    </body>
+</html>

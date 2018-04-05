@@ -43,7 +43,7 @@ def logout(request):
 '''
 def register(request):
     #if request.method == 'POST':
-    client_group - Group.objects.get(name = 'Client')
+    client_group = Group.objects.get(name = 'Client')
     user_form = UserCreationForm(request.POST)
     client_form = ClientForm(request.POST)
     if user_form.is_valid() and client_form.is_valid():

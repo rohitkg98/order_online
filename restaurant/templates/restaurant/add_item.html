@@ -1,0 +1,7 @@
+{% extends "restaurant/base.html" %}
+{% block content %}
+<form action="#" method='POST' enctype='multipart/form-data'>
+    {{ item_form.as_p }}{% csrf_token %}
+    <input type="submit" value="Add Item">
+</form>
+{% endblock %}
