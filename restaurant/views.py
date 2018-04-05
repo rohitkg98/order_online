@@ -6,15 +6,17 @@ from django.contrib.auth.decorators import login_required
 #Create your views here.
 @login_required
 def add_item(request):
-    restaurant = (Restaurant.objects.get(User = request.user))
+    restaurant = Restaurant.objects.filter(User = request.user)[0]
     item_form = ItemsForm(request.POST , request.FILES)
     if item_form.is_valid():
-        new_item = item_form.save(commit = False)
-        #new_item.image = request.FILES['image']
-        item = new_item.save()
-        restaurant.ITEMID.add(item.ITEMID)
         restaurant = restaurant.save()
-        return render(request , 'restaurant/item_added.html', {'new_item' : item , 'restaurant' : restaurant})
+        new_item = item_form.save(commit = True)
+        #new_item.image = request.FILES['image']
+        #item = new_item.save()
+        restaurant = Restaurant.objects.filter(User = request.user)[0]
+        restaurant.ITEMID.add(new_item.ITEMID)
+        restaurant = restaurant.save()
+        return render(request , 'restaurant/item_added.html', {'new_item' : new_item , 'restaurant' : restaurant})
     print(item_form.errors)
     return render(request , 'restaurant/add_item.html', {'item_form' : item_form})
 @login_required
