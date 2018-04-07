@@ -1,0 +1,11 @@
+{% extends 'order/base.html' %}
+{% block content %}
+{% for order in orders %}
+    Your order cost is {{ order.price }}
+    items in it are
+        {% for item in order.Items.all %}
+            {{ item.item_name }} and {{ item.item_price }}
+        {% endfor %}
+    quantity of items is {{ order.quantity }} <br>
+{% endfor %}
+{% endblock %}

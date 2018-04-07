@@ -7,4 +7,5 @@ urlpatterns = [
         url(r'^show_items/' , show_items),
         url(r'^finalize/', finalize_order),
         url(r'^ordered/', ordered),
+        url(r'^view/',view_orders),
         ]

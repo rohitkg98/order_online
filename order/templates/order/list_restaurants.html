@@ -1,9 +1,19 @@
 {% extends 'order/base.html' %}
 {% block content %}
+    <script>
+        function setValue(button){
+        document.getElementById("res_id").value = button.value;
+        return true;
+        }
+    </script>
+    <h3>Select a restaurant</h3>
 <form method="POST" action='/order/show_items/'>{% csrf_token %}
+    <input type='hidden' id='res_id' name='res_id'>
     {% for restaurant in restaurants %}
-        <input class="w3-radio" type = 'radio' name='res_id' value='{{ restaurant.RID}}'> {{ restaurant.name }}<br>
+    <div class="w3-container w3-green">
+        <h4 class="w3-serif w3-black">{{ restaurant.name }}</h4>
+    <button id='res' onclick='return setValue(this)' type="submit" class="w3-button w3-blue w3-hover-red w3-right" value='{{ restaurant.RID}}'>SELECT</button>
+    </div>
     {% endfor %}
-    <input class="w3-btn w3-green" type= 'submit' value = 'Show Items for this'>
 </form>
 {% endblock %}

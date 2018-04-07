@@ -1,9 +1,10 @@
 {% extends 'order/base.html' %}
 {% block content %}
 <h2>You are ordering the following items</h2>
-{% for item in selected_items %}
-    {{item.item_name}} Price: {{ item.price }}<br>
+{% for item in order.Items.all %}
+    {{ item.item_name }} Price: {{ item.item_price }}<br>
 {% endfor %}
 <h2>Grand total is {{ total_cost }}</h2>
-Press the <a href='/order/ordered/'>button</a> to confirm.
+Order had been placed.
+<a class="w3-button w3-blue" href='/order/ordered/'>Pay Now</a>
 {% endblock %}

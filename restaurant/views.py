@@ -11,14 +11,15 @@ def add_item(request):
     if item_form.is_valid():
         restaurant = restaurant.save()
         new_item = item_form.save(commit = True)
-        #new_item.image = request.FILES['image']
-        #item = new_item.save()
+        new_item.image = request.FILES['image']
+        new_item.save()
         restaurant = Restaurant.objects.filter(User = request.user)[0]
         restaurant.Items.add(new_item)
         restaurant = restaurant.save()
         return render(request , 'restaurant/item_added.html', {'new_item' : new_item , 'restaurant' : restaurant})
     print(item_form.errors)
     return render(request , 'restaurant/add_item.html', {'item_form' : item_form})
+
 @login_required
 def view_items(request):
     restaurant = Restaurant.objects.get(User = request.user)
