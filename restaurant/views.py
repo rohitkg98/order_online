@@ -11,19 +11,23 @@ def add_item(request):
     if item_form.is_valid():
         restaurant = restaurant.save()
         new_item = item_form.save(commit = True)
-        new_item.image = request.FILES['image']
-        new_item.save()
         restaurant = Restaurant.objects.filter(User = request.user)[0]
         restaurant.Items.add(new_item)
         restaurant = restaurant.save()
         return render(request , 'restaurant/item_added.html', {'new_item' : new_item , 'restaurant' : restaurant})
-    print(item_form.errors)
     return render(request , 'restaurant/add_item.html', {'item_form' : item_form})
 
 @login_required
 def view_items(request):
     restaurant = Restaurant.objects.get(User = request.user)
     items = []
-    for id in restaurant.ITEMID:
-        items.append((Items.objects.filter(ITEMID=id))[0])
+    for item in restaurant.Items.all():
+        items.append(item)
     return render(request , 'restaurant/view_items.html' , {'items' : items })
+
+@login_required
+def remove_item(request):
+    item_id = request.POST.get("item_id")
+    item = Items.objects.get(ITEMID = item_id)
+    item.delete()
+    return render(request , 'restaurant/item_removed.html' )

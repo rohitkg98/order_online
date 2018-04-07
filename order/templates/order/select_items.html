@@ -4,10 +4,12 @@
 <form method="POST" action="/order/finalize/">{% csrf_token %}
     {% csrf_token %}
     {% for item in items %}
-        {{ item.item_name }}<br>
-        <img width="100" height="100" src="{% static item.image.url %}"><br>
+    <div class="w3-container w3-light-blue">
+        <img class="w3-left" width="100" height="100" src="{% static item.image.url %}"><br>
+        <h2 class="w3-serif">{{ item.item_name }}</h6>
         Price: {{ item.item_price }}
-        <input type = 'checkbox' name='selected_item_ids' value = '{{ item.ITEMID }}'><br><br>
+        <input type = 'checkbox' name='selected_item_ids' value = '{{ item.ITEMID }}'>
+    </div>
     {% endfor %}
     <input type='submit' value='Order these Items'>
 </form>
