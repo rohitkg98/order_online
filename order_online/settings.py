@@ -82,7 +82,12 @@ WSGI_APPLICATION = 'order_online.wsgi.application'
 
 DATABASES = {
     'default': {
-
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'order_online_db',
+            'HOST': '127.0.0.1',
+            'USER': 'root',
+            'PASSWORD': 'kasgdpr1',
+            'PORT':'3306',
         }
 }
 

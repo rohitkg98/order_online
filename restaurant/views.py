@@ -2,6 +2,7 @@ from django.shortcuts import render
 from restaurant.forms import ItemsForm
 from login.models import Restaurant
 from restaurant.models import Items
+from order.models import Order
 from django.contrib.auth.decorators import login_required
 #Create your views here.
 @login_required
@@ -31,3 +32,14 @@ def remove_item(request):
     item = Items.objects.get(ITEMID = item_id)
     item.delete()
     return render(request , 'restaurant/item_removed.html' )
+
+@login_required
+def view_orders(request):
+    restaurant = Restaurant.objects.filter(User = request.user)[0]
+    all_orders = Order.objects.all()
+    orders = []
+    for order in all_orders:
+        for item in restaurant.Items.all():
+            if item in order.Items.all():
+                orders.append(order)
+    return render(request , 'restaurant/view_orders.html' , { 'orders' : orders})

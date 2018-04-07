@@ -37,6 +37,7 @@ def finalize_order(request):
     order.payment_status = True
     order.save()
     return render(request , 'order/finalize_order.html', {'order' : order ,'total_cost' : total_cost})
+
 @login_required
 def ordered(request):
         return render(request , 'order/ordered.html')
