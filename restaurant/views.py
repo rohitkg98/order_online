@@ -4,6 +4,7 @@ from login.models import Restaurant
 from restaurant.models import Items
 from order.models import Order
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 #Create your views here.
 @login_required
 def add_item(request):
@@ -29,9 +30,11 @@ def view_items(request):
 @login_required
 def remove_item(request):
     item_id = request.POST.get("item_id")
-    item = Items.objects.get(ITEMID = item_id)
-    item.delete()
-    return render(request , 'restaurant/item_removed.html' )
+    item = Items.objects.filter(ITEMID = item_id)
+    if item:
+        item[0].delete()
+    #return render(request , 'restaurant/item_removed.html' )
+    return HttpResponseRedirect('http://localhost:8000/restaurant/view_items/')
 
 @login_required
 def view_orders(request):
